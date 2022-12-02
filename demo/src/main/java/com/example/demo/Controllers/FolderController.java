@@ -3,8 +3,6 @@ package com.example.demo.Controllers;
 import com.example.demo.Entities.Folder;
 import com.example.demo.Services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +46,19 @@ public class FolderController {
     public String deleteFolder(@RequestParam ("id") long id){
         folderService.deleteFolder(folderService.getFolder(id));
         return "redirect:/public/folder?deletionSuccess";
+    }
+
+    @GetMapping("/user/folder/rename")
+    public String renameFolder(Model model, @RequestParam ("id") long id){
+        Folder renamedFolder = folderService.getFolder(id);
+        model.addAttribute(("id"), id);
+        model.addAttribute("folder", renamedFolder);
+        return "renameFolderForm";
+    }
+
+    @PostMapping("/user/folder/rename")
+    public String renameFolder(@ModelAttribute ("renameFolder") Folder folder, @RequestParam ("id") long id){
+        folderService.renameFolder(id, folder);
+        return "redirect:/public/folder?renamingSuccess";
     }
 }

@@ -17,4 +17,6 @@ public interface FolderService {
     public void saveFolder(Folder folder);
 
     public void deleteFolder(Folder folder);
+
+    public void renameFolder(long id, Folder folder);
 }

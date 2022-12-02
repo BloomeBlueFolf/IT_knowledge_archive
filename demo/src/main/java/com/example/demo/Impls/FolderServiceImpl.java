@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FolderServiceImpl implements FolderService {
@@ -40,5 +39,10 @@ public class FolderServiceImpl implements FolderService {
         folderRepository.delete(folder);
     }
 
-
+    @Override
+    public void renameFolder(long id, Folder folder) {
+        Folder renamedFolder = folderRepository.findById(id);
+        renamedFolder.setLabel(folder.getLabel());
+        saveFolder(renamedFolder);
+    }
 }
