@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Warning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<br/>
+<div class="col-sm">
+    <div class="d-flex justify-content-center">
+        <h2>Do you really want to delete the folder <i><b><span th:text=${folder.label}></span></b></i>?<br/>
+        <span class="text-danger">All containing chapters will be deleted!</span></h2>
+    </div>
+    <br/>
+    <br/>
+    <div class="d-flex justify-content-center">
+        <div class="col-md-12 text-center">
+            <a th:href="@{/public/folder}" class="btn btn-outline-primary btn-lg me-5">Keep</a>
+            <img src="/images/warning.png" width="130" height="130" alt="An image of an alert sign">
+            <a th:href="@{/user/folder/delete(id=${folder.id})}" class="btn btn-outline-danger btn-lg ms-5">Delete</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
