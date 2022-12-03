@@ -1,12 +1,16 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Entities.Chapter;
 import com.example.demo.Impls.ChapterServiceImpl;
 import com.example.demo.Impls.FolderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ChapterController {
@@ -17,9 +21,33 @@ public class ChapterController {
     @Autowired
     private ChapterServiceImpl chapterService;
 
+
     @GetMapping("/user/chapters")
-    public String showChapters(Model model, @RequestParam ("id") long id){
+    public String showChapters(Model model,
+                               @RequestParam ("id") long id){
+
         model.addAttribute(("folder"), folderService.getFolder(id));
         return "chapters";
+    }
+
+    @GetMapping("/user/chapter/delete/warning")
+    public String deleteChapter(Model model,
+                                @RequestParam ("id") long id,
+                                @RequestParam ("folderId") long folderId){
+
+        Chapter chapter = chapterService.getChapter(id);
+        model.addAttribute(("chapter"), chapter);
+        model.addAttribute(("folderId"), folderId);
+        return "deleteWarningChapter";
+    }
+
+    @GetMapping("/user/chapter/delete")
+    public String deleteChapter(@RequestParam ("id") long id,
+                                @RequestParam ("folderId") long folderId,
+                                RedirectAttributes redirectAttributes){
+
+        chapterService.deleteChapter(chapterService.getChapter(id));
+        redirectAttributes.addAttribute(("id"), folderId);
+        return "redirect:/user/chapters?deletionSuccess";
     }
 }
