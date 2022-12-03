@@ -50,4 +50,21 @@ public class ChapterController {
         redirectAttributes.addAttribute(("id"), folderId);
         return "redirect:/user/chapters?deletionSuccess";
     }
+
+    @GetMapping("/user/chapter/rename")
+    public String renameChapter(Model model,
+                                @RequestParam ("id") long id){
+        Chapter chapter = chapterService.getChapter(id);
+        model.addAttribute(("chapter"), chapter);
+        return "renameChapterForm";
+    }
+
+    @PostMapping("/user/chapter/rename")
+    public String renameChapter(@ModelAttribute ("chapter") Chapter chapter,
+                                @RequestParam ("id") long id,
+                                RedirectAttributes redirectAttributes){
+        chapterService.renameChapter(chapter, id);
+        redirectAttributes.addAttribute(("id"), chapterService.getChapter(id).getFolder().getId());
+        return "redirect:/user/chapters?renamingSuccess";
+    }
 }
