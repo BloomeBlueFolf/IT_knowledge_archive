@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Categories</title>
+    <title>Folders</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/style/tablestyle.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
                     <tr th:each = "folder : ${folders}">
-                        <th  class="align-middle" scope="row"><img src="/images/folders.png" width="30" height="30" alt="folder"><span th:text = "${folder.label}" class="ms-2"></span></th>
+                        <th  class="align-middle" scope="row"><img src="/images/folders.png" width="30" height="30" alt="folder"><a th:href="@{/user/chapters(id=${folder.id})}"><span th:text = "${folder.label}" class="ms-2"></span></a></th>
                         <td class="align-middle"> <div th:if = "${folder.chapters.size} == '0'">0</div>
                             <div th:unless = "${folder.chapters.size} == '0'" th:text = "${folder.chapters.size}"></div></td>
                         <td>

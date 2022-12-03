@@ -1,0 +1,64 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapters</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/style/tablestyle.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container w-50">
+  <br/>
+  <div class="col d-flex justify-content-center">
+    <h1><span th:text="${folder.label}"></span></h1>
+  </div>
+  <br/>
+  <div th:if = "${param.addingSuccess}" class="d-flex justify-content-center">
+    <div class="alert alert-info w-25">Chapter succesfully added!</div>
+  </div>
+  <div th:if = "${param.deletionSuccess}" class="d-flex justify-content-center">
+    <div class="alert alert-info w-25">Chapter succesfully deleted!</div>
+  </div>
+  <div th:if = "${param.renamingSuccess}" class="d-flex justify-content-center">
+    <div class="alert alert-info w-25">Chapter renamed!</div>
+  </div>
+  <br/>
+  <br/>
+  <div class="d-flex justify-content-center">
+    <table class="table table-striped p-3 w-75 table-hover table-bordered">
+      <thead class="table-primary">
+      <tr>
+        <th scope="col">Chapters</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each = "chapter : ${folder.chapters}">
+        <th  class="align-middle" scope="row"><img src="/images/chapters.png" width="35" height="35" alt="chapter"><a th:href="@{/user/segments(id=${chapter.id})}"><span th:text = "${chapter.label}" class="ms-2"></span></a></th>
+        <td>
+          <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <a type="button" class="btn btn-primary" th:href="@{/user/folder/addChapter(id=${folder.id})}">Add chapter</a>
+
+            <div class="btn-group" role="group">
+              <a id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <h5><a class="dropdown-item text-light rounded-top p-2" th:href="@{/user/chapter/rename(id=${chapter.id})}">Rename chapter</a>
+                  <a class="dropdown-item danger text-light rounded-bottom p-2" th:href="@{/user/chapter/delete/warning(id=${chapter.id})}">Delete chapter</a></h5>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <br/>
+  <hr class="w-100">
+  <div class="col ms-5">
+    <a th:href="@{/user/folder/addChapter(id=${folder.id})}" class="btn btn-outline-primary">Add chapter</a>
+  </div>
+</div>
+</body>
+</html>
