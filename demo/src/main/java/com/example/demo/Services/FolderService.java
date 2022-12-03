@@ -1,6 +1,7 @@
 package com.example.demo.Services;
 
 
+import com.example.demo.Entities.Chapter;
 import com.example.demo.Entities.Folder;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface FolderService {
     public void deleteFolder(Folder folder);
 
     public void renameFolder(long id, Folder folder);
+
+    public void assignChapterToFolder(Chapter chapter, Folder folder);
 }

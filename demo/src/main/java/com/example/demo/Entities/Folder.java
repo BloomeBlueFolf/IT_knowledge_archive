@@ -52,4 +52,9 @@ public class Folder {
                 ", chapters=" + chapters +
                 '}';
     }
+
+    public void assignChapterToFolder(Chapter chapter){
+        this.chapters.add(chapter);
+        chapter.setFolder(this);
+    }
 }

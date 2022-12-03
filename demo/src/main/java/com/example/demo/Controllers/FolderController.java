@@ -1,5 +1,6 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Entities.Chapter;
 import com.example.demo.Entities.Folder;
 import com.example.demo.Services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,19 @@ public class FolderController {
     public String renameFolder(@ModelAttribute ("renameFolder") Folder folder, @RequestParam ("id") long id){
         folderService.renameFolder(id, folder);
         return "redirect:/public/folder?renamingSuccess";
+    }
+
+    @GetMapping("/user/folder/addChapter")
+    public String addChapter(Model model, @RequestParam ("id") long id){
+        Chapter chapter = new Chapter();
+        model.addAttribute(("id"), id);
+        model.addAttribute(("chapter"), chapter);
+        return "addChapterForm";
+    }
+
+    @PostMapping("/user/folder/addChapter")
+    public String addChapter(@ModelAttribute ("chapter") Chapter chapter, @RequestParam ("id") long id){
+        folderService.assignChapterToFolder(chapter, folderService.getFolder(id));
+        return "redirect:/public/folder?addingSuccess";
     }
 }

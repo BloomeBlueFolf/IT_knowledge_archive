@@ -42,7 +42,7 @@
                             <div th:unless = "${folder.chapters.size} == '0'" th:text = "${folder.chapters.size}"></div></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                            <a type="button" class="btn btn-primary" th:href="@{/user/chapter/upload(id=${folder.id})}">Add chapter</a>
+                            <a type="button" class="btn btn-primary" th:href="@{/user/folder/addChapter(id=${folder.id})}">Add chapter</a>
 
                                 <div class="btn-group" role="group">
                                 <a id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>

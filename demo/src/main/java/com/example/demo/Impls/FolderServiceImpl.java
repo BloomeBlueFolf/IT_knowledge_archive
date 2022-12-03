@@ -1,6 +1,8 @@
 package com.example.demo.Impls;
 
+import com.example.demo.Entities.Chapter;
 import com.example.demo.Entities.Folder;
+import com.example.demo.Repositories.ChapterRepository;
 import com.example.demo.Repositories.FolderRepository;
 import com.example.demo.Services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,10 @@ public class FolderServiceImpl implements FolderService {
 
     @Autowired
     private FolderRepository folderRepository;
+
+    @Autowired
+    private ChapterRepository chapterRepository;
+
 
     @Override
     public Folder getFolder(long id) {
@@ -44,5 +50,13 @@ public class FolderServiceImpl implements FolderService {
         Folder renamedFolder = folderRepository.findById(id);
         renamedFolder.setLabel(folder.getLabel());
         saveFolder(renamedFolder);
+    }
+
+    @Override
+    public void assignChapterToFolder(Chapter chapter, Folder folder){
+        folder.getChapters().add(chapter);
+        chapter.setFolder(folder);
+        folderRepository.save(folder);
+        chapterRepository.save(chapter);
     }
 }
