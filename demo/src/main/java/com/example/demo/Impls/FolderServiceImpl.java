@@ -27,7 +27,7 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public List<Folder> getAllFolders() {
-        return folderRepository.findAll();
+        return folderRepository.findAllByOrderByLabelDesc();
     }
 
     @Override

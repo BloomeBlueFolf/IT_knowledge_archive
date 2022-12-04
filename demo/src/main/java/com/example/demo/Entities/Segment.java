@@ -10,8 +10,6 @@ public class Segment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String label = "";
-
     private String text = "";
 
     @Lob
@@ -22,25 +20,14 @@ public class Segment {
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
 
-    public Segment(String label) {
-        this.label = label;
-    }
+    public Segment(){};
 
-    public Segment(String label, String text) {
-        this.label = label;
+    public Segment(String text) {
         this.text = text;
     }
 
     public long getId() {
         return id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public String getText() {

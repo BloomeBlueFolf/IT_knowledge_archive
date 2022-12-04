@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create chapter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container w-50">
+    <br/>
+    <div class="col d-flex justify-content-center">
+        <h1>Segment creation</h1>
+    </div>
+    <br/>
+    <div class="d-flex justify-content-center">
+        <h4><span>Add a segment.</span></h4>
+    </div>
+    <br/>
+    <form th:action = "@{/user/segment/addContent(id=${id})}" th:object="${segment}" method = "POST" class="d-flex justify-content-center">
+        <div class="form-group">
+            <div class="col-sm">
+                <label for="contentSegment" class="col-sm-2 col-form-label col-form-label-lg">Content</label>
+                <textarea rows="6" cols="60" id="contentSegment" th:field = "*{text}" placeholder="Enter text"></textarea>
+            </div>
+            <div class="col-sm">
+                <button type="submit" class="btn btn-outline-primary m-2 btn-lg align-text-top">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
