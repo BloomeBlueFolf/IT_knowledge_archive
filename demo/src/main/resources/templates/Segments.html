@@ -33,6 +33,9 @@
                         <div class="card w-75 text-center text-black mb-3" style="width: 18rem;">
                             <div class="card-body ">
                                 <p class="card-text d-flex"><div th:text = "${segment.text}"></div>
+                                <div class="d-flex justify-content-end">
+                                <a th:href="@{/user/segment/delete(id=${segment.id}, chapterId=${chapter.id})}" class="d-flex justify-content-end"><img src="/images/bin.png" width="40px" height="40px" alt="delete button"></a>
+                                </div>
                             </div>
                         </div>
                     </div>

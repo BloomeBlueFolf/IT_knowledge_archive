@@ -48,4 +48,14 @@ public class SegmentController {
         segmentService.assignSegmentToChapter(segment, chapterService.getChapter(id));
         return "redirect:/user/segments?addingSuccess";
     }
+
+    @GetMapping("/user/segment/delete")
+    public String deleteSegment(@RequestParam ("id") long id,
+                                @RequestParam ("chapterId") long chapterId,
+                                RedirectAttributes redirectAttributes){
+
+        segmentService.deleteSegment(segmentService.getSegment(id));
+        redirectAttributes.addAttribute(("id"), chapterId);
+        return "redirect:/user/segments";
+    }
 }
