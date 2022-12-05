@@ -58,4 +58,23 @@ public class SegmentController {
         redirectAttributes.addAttribute(("id"), chapterId);
         return "redirect:/user/segments";
     }
+
+    @GetMapping("/user/segment/edit")
+    public String editSegment(Model model,
+                              @RequestParam ("id") long id){
+
+        Segment editedSegment = segmentService.getSegment(id);
+        model.addAttribute(("segment"), editedSegment);
+        return "EditSegmentForm";
+    }
+
+    @PostMapping("/user/segment/edit")
+    public String editSegment(@ModelAttribute ("segment") Segment segment,
+                              @RequestParam ("id") long id,
+                              RedirectAttributes redirectAttributes){
+
+        segmentService.editSegment(segment, id);
+        redirectAttributes.addAttribute(("id"), segmentService.getSegment(id).getChapter().getId());
+        return "redirect:/user/segments?editingSuccess";
+    }
 }

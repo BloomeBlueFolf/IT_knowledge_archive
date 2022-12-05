@@ -18,11 +18,8 @@
         <div th:if = "${param.addingSuccess}" class="d-flex justify-content-center">
             <div class="alert alert-info w-25">Segment succesfully added!</div>
         </div>
-        <div th:if = "${param.deletionSuccess}" class="d-flex justify-content-center">
-            <div class="alert alert-info w-25">Segment succesfully deleted!</div>
-        </div>
-        <div th:if = "${param.renamingSuccess}" class="d-flex justify-content-center">
-            <div class="alert alert-info w-25">Chapter renamed!</div>
+        <div th:if = "${param.editingSuccess}" class="d-flex justify-content-center">
+            <div class="alert alert-info w-25">Segment succesfully edited!</div>
         </div>
         <br/>
         <br/>
@@ -33,8 +30,9 @@
                         <div class="card w-75 text-center text-black mb-3" style="width: 18rem;">
                             <div class="card-body ">
                                 <p class="card-text d-flex"><div th:text = "${segment.text}"></div>
-                                <div class="d-flex justify-content-end">
-                                <a th:href="@{/user/segment/delete(id=${segment.id}, chapterId=${chapter.id})}" class="d-flex justify-content-end"><img src="/images/bin.png" width="40px" height="40px" alt="delete button"></a>
+                                <div class="d-flex justify-content-between">
+                                    <a th:href="@{/user/segment/edit(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/edit.png" width="40px" height="40px" alt="edit button"></a>
+                                    <a th:href="@{/user/segment/delete(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/bin.png" width="40px" height="40px" alt="delete button"></a>
                                 </div>
                             </div>
                         </div>
@@ -48,6 +46,7 @@
         <div class="col ms-5">
             <a th:href="@{/user/segment/addContent(id=${chapter.id})}" class="btn btn-outline-primary">Add content</a>
         </div>
+        <br/>
     </div>
 </body>
 </html>

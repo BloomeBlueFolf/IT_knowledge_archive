@@ -16,4 +16,6 @@ public interface SegmentService {
     public void deleteSegment(Segment segment);
 
     public void assignSegmentToChapter(Segment segment, Chapter chapter);
+
+    public void editSegment(Segment segment, long editedSegmentId);
 }

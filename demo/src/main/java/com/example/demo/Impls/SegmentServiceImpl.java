@@ -45,6 +45,13 @@ public class SegmentServiceImpl implements SegmentService {
         chapter.getSegments().add(segment);
         segment.setChapter(chapter);
         segmentRepository.save(segment);
-        chapterRepository.save(chapter); //checking if necessary
+        chapterRepository.save(chapter);
+    }
+
+    @Override
+    public void editSegment(Segment segment, long editedSegmentId) {
+        Segment editedSegment = segmentRepository.findById(editedSegmentId);
+        editedSegment.setText(segment.getText());
+        segmentRepository.save(editedSegment);
     }
 }

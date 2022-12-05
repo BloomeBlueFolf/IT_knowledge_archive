@@ -10,6 +10,7 @@ public class Segment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(columnDefinition = "TEXT")
     private String text = "";
 
     @Lob
