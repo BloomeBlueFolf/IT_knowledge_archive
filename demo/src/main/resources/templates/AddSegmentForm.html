@@ -16,17 +16,27 @@
         <h4><span>Add a segment.</span></h4>
     </div>
     <br/>
-    <form th:action = "@{/user/segment/addContent(id=${id})}" th:object="${segment}" method = "POST" class="d-flex justify-content-center">
+    <form th:action = "@{/user/segment/addContent(id=${id})}" th:object="${segment}" method = "POST" class="d-flex justify-content-center" enctype="multipart/form-data">
         <div class="form-group">
             <div class="col-sm">
                 <label for="contentSegment" class="col-sm-2 col-form-label col-form-label-lg">Content</label>
                 <textarea rows="6" cols="60" id="contentSegment" th:field = "*{text}" placeholder="Enter text"></textarea>
+            </div>
+            <div class="form-group">
+                <br/>
+                <label for="file" class="col-form-label col-form-label-lg">Upload image if required.</label>
+                <br/>
+                <input type="file" class="form-control-file" id="file" name="file">
             </div>
             <div class="col-sm">
                 <button type="submit" class="btn btn-outline-primary m-2 btn-lg align-text-top">Submit</button>
             </div>
         </div>
     </form>
+    <br/>
+    <hr>
+    <button onclick="history.go(-1);" class="btn btn-outline-primary me-1"><img src="/images/return.png" width="25px" height="25px" alt="return button"></button>
+    </hr>
 </div>
 </body>
 </html>

@@ -30,6 +30,8 @@
                         <div class="card w-75 text-center text-black mb-3" style="width: 18rem;">
                             <div class="card-body ">
                                 <p class="card-text d-flex"><div th:text = "${segment.text}"></div>
+                                <p class="card-text d-flex"><div th:unless = "${segment.fileType == ''}"><img th:src="@{/user/segment/image(id=${segment.id})}" width="640px" height="440px" alt="image" class="img-thumbnail"></div>
+                                <br/>
                                 <div class="d-flex justify-content-between">
                                     <a th:href="@{/user/segment/edit(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/edit.png" width="40px" height="40px" alt="edit button"></a>
                                     <a th:href="@{/user/segment/delete(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/bin.png" width="40px" height="40px" alt="delete button"></a>
@@ -37,13 +39,14 @@
                             </div>
                         </div>
                     </div>
-                    <br/>
+
                 </div>
             </div>
         </div>
         <br/>
         <hr class="w-100">
         <div class="col ms-5">
+            <button onclick="history.go(-1);" class="btn btn-outline-primary me-1"><img src="/images/return.png" width="25px" height="25px" alt="return button"></button>
             <a th:href="@{/user/segment/addContent(id=${chapter.id})}" class="btn btn-outline-primary"><img src="/images/plus.png" width="20px" height="20px" alt="add button"><span class="ms-2">Add content</span></a>
         </div>
         <br/>

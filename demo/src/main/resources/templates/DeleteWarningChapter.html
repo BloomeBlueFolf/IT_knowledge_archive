@@ -7,7 +7,7 @@
 </head>
 <body>
 <br/>
-<div class="col-sm">
+<div class="container w-50">
     <div class="d-flex justify-content-center">
         <h2>Do you really want to delete the chapter <i><b><span th:text=${chapter.label}></span></b></i>?<br/></h2>
     </div>
@@ -20,6 +20,9 @@
             <a th:href="@{/user/chapter/delete(id=${chapter.id}, folderId=${folderId})}" class="btn btn-outline-danger btn-lg ms-5">Delete</a>
         </div>
     </div>
+    <br/>
+    <hr>
+    <button onclick="history.go(-1);" class="btn btn-outline-primary me-1"><img src="/images/return.png" width="25px" height="25px" alt="return button"></button>
 </div>
 </body>
 </html>

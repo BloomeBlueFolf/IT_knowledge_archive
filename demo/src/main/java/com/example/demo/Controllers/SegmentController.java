@@ -1,15 +1,20 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Entities.Segment;
+import com.example.demo.ImageUtils;
 import com.example.demo.Impls.ChapterServiceImpl;
 import com.example.demo.Impls.SegmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -42,11 +47,21 @@ public class SegmentController {
     @PostMapping("/user/segment/addContent")
     public String addSegment(@ModelAttribute ("segment") Segment segment,
                              @RequestParam ("id") long id,
+                             @RequestParam ("file") MultipartFile file,
                              RedirectAttributes redirectAttributes){
 
+        segmentService.assignSegmentToChapter(segment, chapterService.getChapter(id), file);
         redirectAttributes.addAttribute(("id"), id);
-        segmentService.assignSegmentToChapter(segment, chapterService.getChapter(id));
         return "redirect:/user/segments?addingSuccess";
+    }
+
+    @GetMapping("/user/segment/image")
+    public ResponseEntity<?> getImage(@RequestParam ("id") long id){
+
+        Segment segment = segmentService.getSegment(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.valueOf(segment.getFileType()))
+                .body(ImageUtils.decompressImage(segment.getImage()));
     }
 
     @GetMapping("/user/segment/delete")

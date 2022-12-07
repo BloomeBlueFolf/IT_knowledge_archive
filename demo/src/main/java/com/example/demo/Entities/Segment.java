@@ -3,6 +3,9 @@ package com.example.demo.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 @Entity
 public class Segment {
 
@@ -14,11 +17,14 @@ public class Segment {
     private String text = "";
 
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
+
+    private String fileType = "";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name = "chapter_id")
+    @JoinColumn(name = "chapterId")
     private Chapter chapter;
 
     public Segment(){};
@@ -29,6 +35,14 @@ public class Segment {
 
     public long getId() {
         return id;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
     public String getText() {

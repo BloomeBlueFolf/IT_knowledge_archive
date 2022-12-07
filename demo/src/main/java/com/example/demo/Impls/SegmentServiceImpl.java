@@ -2,11 +2,13 @@ package com.example.demo.Impls;
 
 import com.example.demo.Entities.Chapter;
 import com.example.demo.Entities.Segment;
+import com.example.demo.ImageUtils;
 import com.example.demo.Repositories.ChapterRepository;
 import com.example.demo.Repositories.SegmentRepository;
 import com.example.demo.Services.SegmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -41,11 +43,19 @@ public class SegmentServiceImpl implements SegmentService {
     }
 
     @Override
-    public void assignSegmentToChapter(Segment segment, Chapter chapter) {
-        chapter.getSegments().add(segment);
-        segment.setChapter(chapter);
-        segmentRepository.save(segment);
-        chapterRepository.save(chapter);
+    public void assignSegmentToChapter(Segment segment, Chapter chapter, MultipartFile file) {
+        if (file.getContentType().contains("image")) {
+            try {
+                segment.setFileType(file.getContentType());
+                segment.setImage(ImageUtils.compressImage(file.getBytes()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+            chapter.getSegments().add(segment);
+            segment.setChapter(chapter);
+            segmentRepository.save(segment);
+            chapterRepository.save(chapter);
     }
 
     @Override
