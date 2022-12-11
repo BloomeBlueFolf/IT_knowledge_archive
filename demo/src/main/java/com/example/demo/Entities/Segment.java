@@ -19,6 +19,9 @@ public class Segment {
     @Size(max=2000)
     private String text;
 
+
+    private long dbindex = 0;
+
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
@@ -38,6 +41,14 @@ public class Segment {
 
     public long getId() {
         return id;
+    }
+
+    public long getDbindex() {
+        return dbindex;
+    }
+
+    public void setDbindex(long dbindex) {
+        this.dbindex = dbindex;
     }
 
     public String getFileType() {

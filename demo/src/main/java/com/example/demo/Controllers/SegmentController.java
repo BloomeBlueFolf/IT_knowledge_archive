@@ -33,6 +33,7 @@ public class SegmentController {
                                @RequestParam ("id") long id){
 
         model.addAttribute(("chapter"), chapterService.getChapter(id));
+        model.addAttribute(("segmentList"), segmentService.findSegmentsOrderedByDbIndex(id));
         return "segments";
     }
 
@@ -110,5 +111,25 @@ public class SegmentController {
         segmentService.editSegment(segment, id);
         redirectAttributes.addAttribute(("id"), segmentService.getSegment(id).getChapter().getId());
         return "redirect:/user/segments?editingSuccess";
+    }
+
+    @GetMapping("/user/segment/swapWithPrevious")
+    public String swapWithPrevious(Model model,
+                                   @RequestParam ("id") long id,
+                                   @RequestParam ("segmentId") long segmentId){
+
+        segmentService.swapWithPreviousSegment(segmentService.getSegment(segmentId));
+        model.addAttribute(("chapter"), chapterService.getChapter(id));
+        return "segments";
+    }
+
+    @GetMapping("/user/segment/swapWithFollowing")
+    public String swapWithFollowing(Model model,
+                                   @RequestParam ("id") long id,
+                                   @RequestParam ("segmentId") long segmentId){
+
+        segmentService.swapWithFollowingSegment(segmentService.getSegment(segmentId));
+        model.addAttribute(("chapter"), chapterService.getChapter(id));
+        return "segments";
     }
 }

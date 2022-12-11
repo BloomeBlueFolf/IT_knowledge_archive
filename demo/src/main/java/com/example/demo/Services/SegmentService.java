@@ -19,4 +19,10 @@ public interface SegmentService {
     public void assignSegmentToChapter(Segment segment, Chapter chapter, MultipartFile file);
 
     public void editSegment(Segment segment, long editedSegmentId);
+
+    public void swapWithPreviousSegment(Segment currentSegment);
+
+    public void swapWithFollowingSegment(Segment currentSegment);
+
+    public List<Segment> findSegmentsOrderedByDbIndex(long id);
 }

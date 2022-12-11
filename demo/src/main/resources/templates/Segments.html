@@ -25,7 +25,7 @@
         <br/>
         <div class="d-flex justify-content-center">
             <div class="d-flex flex-column w-100">
-                <div th:each = "segment : ${chapter.segments}">
+                <div th:each = "segment : ${segmentList}">
                     <div class="d-flex justify-content-center">
                         <div class="card w-75 text-center text-black mb-3" style="width: 18rem;">
                             <div class="card-body ">
@@ -35,6 +35,8 @@
                                 <div class="d-flex justify-content-between">
                                     <a th:href="@{/user/segment/edit(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/edit.png" width="40px" height="40px" alt="edit button"></a>
                                     <a th:href="@{/user/segment/delete(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/bin.png" width="40px" height="40px" alt="delete button"></a>
+                                    <a th:href="@{/user/segment/swapWithPrevious(id=${chapter.id}, segmentId=${segment.id})}"><img src="/images/up.png" width="40px" height="40px" alt="swap previous"></a>
+                                    <a th:href="@{/user/segment/swapWithFollowing(id=${chapter.id}, segmentId=${segment.id})}"><img src="/images/down.png" width="40px" height="40px" alt="swap following"></a>
                                 </div>
                             </div>
                         </div>
