@@ -30,3 +30,7 @@ a{
             font-weight: bold;
             border-color: #e7d2a3;
 }
+
+.error {
+        color: red;
+    }

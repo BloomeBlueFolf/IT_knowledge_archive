@@ -4,12 +4,14 @@ import com.example.demo.Entities.Segment;
 import com.example.demo.ImageUtils;
 import com.example.demo.Impls.ChapterServiceImpl;
 import com.example.demo.Impls.SegmentServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,10 +47,19 @@ public class SegmentController {
     }
 
     @PostMapping("/user/segment/addContent")
-    public String addSegment(@ModelAttribute ("segment") Segment segment,
+    public String addSegment(@Valid @ModelAttribute ("segment") Segment segment,
+                             BindingResult result,
                              @RequestParam ("id") long id,
                              @RequestParam ("file") MultipartFile file,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes,
+                             Model model){
+
+        if(result.hasErrors()){
+            Segment segment2 = new Segment();
+            model.addAttribute(("segment"), segment);
+            model.addAttribute(("id"), id);
+            return "addSegmentForm";
+        }
 
         segmentService.assignSegmentToChapter(segment, chapterService.getChapter(id), file);
         redirectAttributes.addAttribute(("id"), id);
@@ -84,9 +95,17 @@ public class SegmentController {
     }
 
     @PostMapping("/user/segment/edit")
-    public String editSegment(@ModelAttribute ("segment") Segment segment,
+    public String editSegment(@Valid @ModelAttribute ("segment") Segment segment,
+                              BindingResult result,
                               @RequestParam ("id") long id,
-                              RedirectAttributes redirectAttributes){
+                              RedirectAttributes redirectAttributes,
+                              Model model){
+
+        if(result.hasErrors()){
+            Segment editedSegment = segmentService.getSegment(id);
+            model.addAttribute(("segment"), editedSegment);
+            return "EditSegmentForm";
+        }
 
         segmentService.editSegment(segment, id);
         redirectAttributes.addAttribute(("id"), segmentService.getSegment(id).getChapter().getId());

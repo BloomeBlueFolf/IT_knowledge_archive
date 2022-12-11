@@ -3,9 +3,11 @@ package com.example.demo.Controllers;
 import com.example.demo.Entities.Chapter;
 import com.example.demo.Impls.ChapterServiceImpl;
 import com.example.demo.Impls.FolderServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,15 +56,25 @@ public class ChapterController {
     @GetMapping("/user/chapter/rename")
     public String renameChapter(Model model,
                                 @RequestParam ("id") long id){
+
         Chapter chapter = chapterService.getChapter(id);
         model.addAttribute(("chapter"), chapter);
         return "renameChapterForm";
     }
 
     @PostMapping("/user/chapter/rename")
-    public String renameChapter(@ModelAttribute ("chapter") Chapter chapter,
+    public String renameChapter(@Valid @ModelAttribute ("chapter") Chapter chapter,
+                                BindingResult result,
                                 @RequestParam ("id") long id,
-                                RedirectAttributes redirectAttributes){
+                                RedirectAttributes redirectAttributes,
+                                Model model){
+
+        if(result.hasErrors()){
+            Chapter chapters = chapterService.getChapter(id);
+            model.addAttribute(("chapter"), chapters);
+            return "renameChapterForm";
+        }
+
         chapterService.renameChapter(chapter, id);
         redirectAttributes.addAttribute(("id"), chapterService.getChapter(id).getFolder().getId());
         return "redirect:/user/chapters?renamingSuccess";

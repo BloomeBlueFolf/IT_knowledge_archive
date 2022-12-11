@@ -1,6 +1,8 @@
 package com.example.demo.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +15,8 @@ public class Folder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String label = "";
+    @Size(min=1, max=25)
+    private String label;
 
     @OneToMany(mappedBy = "folder", orphanRemoval = true)
     private List<Chapter> chapters = new LinkedList<>();

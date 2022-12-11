@@ -2,6 +2,8 @@ package com.example.demo.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -14,7 +16,8 @@ public class Segment {
     private long id;
 
     @Column(columnDefinition = "TEXT")
-    private String text = "";
+    @Size(max=2000)
+    private String text;
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")

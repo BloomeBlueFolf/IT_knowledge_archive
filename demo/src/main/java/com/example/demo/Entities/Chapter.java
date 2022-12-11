@@ -2,6 +2,7 @@ package com.example.demo.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +14,8 @@ public class Chapter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String label = "";
+    @Size(min=1, max=25)
+    private String label;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

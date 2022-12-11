@@ -3,9 +3,11 @@ package com.example.demo.Controllers;
 import com.example.demo.Entities.Chapter;
 import com.example.demo.Entities.Folder;
 import com.example.demo.Services.FolderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -36,7 +38,12 @@ public class FolderController {
     }
 
     @PostMapping("/user/folder/create")
-    public String createFolder(@ModelAttribute ("createFolder") Folder folder){
+    public String createFolder(@Valid @ModelAttribute ("folder") Folder folder,
+                               BindingResult result){
+
+        if(result.hasErrors()){
+            return "createFolderForm";
+        }
 
         folderService.saveFolder(folder);
         return "redirect:/public/folders?creationSuccess";
@@ -69,8 +76,17 @@ public class FolderController {
     }
 
     @PostMapping("/user/folder/rename")
-    public String renameFolder(@ModelAttribute ("renameFolder") Folder folder,
-                               @RequestParam ("id") long id){
+    public String renameFolder(@Valid @ModelAttribute ("folder") Folder folder,
+                               BindingResult result,
+                               @RequestParam ("id") long id,
+                               Model model){
+
+        if(result.hasErrors()){
+            Folder renamedFolder = folderService.getFolder(id);
+            model.addAttribute(("id"), id);
+            model.addAttribute("folder", renamedFolder);
+            return "renameFolderForm";
+        }
 
         folderService.renameFolder(id, folder);
         return "redirect:/public/folders?renamingSuccess";
@@ -86,9 +102,17 @@ public class FolderController {
     }
 
     @PostMapping("/user/folder/addChapter")
-    public ModelAndView addChapter(@ModelAttribute ("chapter") Chapter chapter,
+    public ModelAndView addChapter(@Valid @ModelAttribute ("chapter") Chapter chapter,
+                                   BindingResult result,
                                    @RequestParam ("id") long id,
-                                   RedirectAttributes redirectAttributes){
+                                   RedirectAttributes redirectAttributes,
+                                   Model model){
+
+        if(result.hasErrors()){
+            model.addAttribute(("id"), id);
+            model.addAttribute(("chapter"), chapter);
+            return new ModelAndView("addChapterForm");
+        }
 
         folderService.assignChapterToFolder(chapter, folderService.getFolder(id));
         redirectAttributes.addAttribute("id", id);
