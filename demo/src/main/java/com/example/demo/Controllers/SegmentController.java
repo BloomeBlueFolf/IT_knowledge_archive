@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -114,22 +115,22 @@ public class SegmentController {
     }
 
     @GetMapping("/user/segment/swapWithPrevious")
-    public String swapWithPrevious(Model model,
-                                   @RequestParam ("id") long id,
-                                   @RequestParam ("segmentId") long segmentId){
+    public ModelAndView swapWithPrevious(@RequestParam ("id") long id,
+                                         @RequestParam ("segmentId") long segmentId,
+                                         RedirectAttributes redirectAttributes){
 
         segmentService.swapWithPreviousSegment(segmentService.getSegment(segmentId));
-        model.addAttribute(("chapter"), chapterService.getChapter(id));
-        return "segments";
+        redirectAttributes.addAttribute(("id"), id);
+        return new ModelAndView("redirect:/user/segments");
     }
 
     @GetMapping("/user/segment/swapWithFollowing")
-    public String swapWithFollowing(Model model,
-                                   @RequestParam ("id") long id,
-                                   @RequestParam ("segmentId") long segmentId){
+    public ModelAndView swapWithFollowing(@RequestParam ("id") long id,
+                                   @RequestParam ("segmentId") long segmentId,
+                                    RedirectAttributes redirectAttributes){
 
         segmentService.swapWithFollowingSegment(segmentService.getSegment(segmentId));
-        model.addAttribute(("chapter"), chapterService.getChapter(id));
-        return "segments";
+        redirectAttributes.addAttribute(("id"), id);
+        return new ModelAndView("redirect:/user/segments");
     }
 }

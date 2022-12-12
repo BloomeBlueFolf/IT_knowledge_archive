@@ -27,21 +27,35 @@
             <div class="d-flex flex-column w-100">
                 <div th:each = "segment : ${segmentList}">
                     <div class="d-flex justify-content-center">
-                        <div class="card w-75 text-center text-black mb-3" style="width: 18rem;">
-                            <div class="card-body ">
-                                <p class="card-text d-flex"><div th:text = "${segment.text}"></div>
-                                <p class="card-text d-flex"><div th:unless = "${segment.fileType == ''}"><img th:src="@{/user/segment/image(id=${segment.id})}" width="640px" height="440px" alt="image" class="img-thumbnail"></div>
-                                <br/>
-                                <div class="d-flex justify-content-between">
-                                    <a th:href="@{/user/segment/edit(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/edit.png" width="40px" height="40px" alt="edit button"></a>
-                                    <a th:href="@{/user/segment/delete(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/bin.png" width="40px" height="40px" alt="delete button"></a>
-                                    <a th:href="@{/user/segment/swapWithPrevious(id=${chapter.id}, segmentId=${segment.id})}"><img src="/images/up.png" width="40px" height="40px" alt="swap previous"></a>
-                                    <a th:href="@{/user/segment/swapWithFollowing(id=${chapter.id}, segmentId=${segment.id})}"><img src="/images/down.png" width="40px" height="40px" alt="swap following"></a>
+                        <div class="card w-100 text-center text-black mb-3 border-light" style="width: 18rem;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm align-self-end">
+                                        <div class="d-flex justify-content-start">
+                                            <div class="me-4">
+                                                <a th:href="@{/user/segment/edit(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/edit.png" width="40px" height="40px" alt="edit button"></a>
+                                            </div>
+                                            <a th:href="@{/user/segment/delete(id=${segment.id}, chapterId=${chapter.id})}"><img src="/images/bin.png" width="40px" height="40px" alt="delete button"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <p class="card-text d-flex"><div th:text = "${segment.text}"></div>
+                                        <p class="card-text d-flex"><div th:unless = "${segment.fileType == ''}"><img th:src="@{/user/segment/image(id=${segment.id})}" width="640px" height="440px" alt="image" class="img-thumbnail"></div>
+                                    </div>
+                                    <div class="col-sm align-self-end">
+                                        <div class="d-flex  flex-column align-items-end">
+                                            <div class="mb-3">
+                                                <a th:href="@{/user/segment/swapWithPrevious(id=${chapter.id}, segmentId=${segment.id})}"><img src="/images/up.png" width="40px" height="40px" alt="swap previous"></a>
+                                            </div>
+                                            <div>
+                                            <a th:href="@{/user/segment/swapWithFollowing(id=${chapter.id}, segmentId=${segment.id})}"><img src="/images/down.png" width="40px" height="40px" alt="swap following"></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
