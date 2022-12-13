@@ -64,6 +64,7 @@
         <div class="col ms-5">
             <a th:href="@{/user/chapters(id=${chapter.getFolder().getId()}, label=${chapter.label})}" class="btn btn-outline-primary me-1"><img src="/images/return.png" width="25px" height="25px" alt="return button"></a>
             <a th:href="@{/user/segment/addContent(id=${chapter.id})}" class="btn btn-outline-primary"><img src="/images/plus.png" width="20px" height="20px" alt="add button"><span class="ms-2">Add content</span></a>
+            <a th:href="@{/user/segment/createPdf(id=${chapter.id})}">Link</a>
         </div>
         <br/>
     </div>

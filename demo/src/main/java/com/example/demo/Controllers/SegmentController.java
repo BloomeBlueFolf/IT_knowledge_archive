@@ -133,4 +133,14 @@ public class SegmentController {
         redirectAttributes.addAttribute(("id"), id);
         return new ModelAndView("redirect:/user/segments");
     }
+
+    @GetMapping("/user/segment/createPdf")
+    public String createPdf(Model model,
+                            @RequestParam ("id") long id){
+
+        segmentService.createPdf(id);
+        model.addAttribute(("chapter"), chapterService.getChapter(id));
+        model.addAttribute(("segmentList"), segmentService.findSegmentsOrderedByDbIndex(id));
+        return "segments";
+    }
 }

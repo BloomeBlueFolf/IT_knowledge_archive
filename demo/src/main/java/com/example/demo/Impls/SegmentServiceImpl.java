@@ -6,10 +6,14 @@ import com.example.demo.ImageUtils;
 import com.example.demo.Repositories.ChapterRepository;
 import com.example.demo.Repositories.SegmentRepository;
 import com.example.demo.Services.SegmentService;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -109,6 +113,32 @@ public class SegmentServiceImpl implements SegmentService {
             }
         }
         return segmentsOfChapter;
+    }
+
+    public void createPdf(long chapterId){
+        Document document = new Document();
+        Chapter chapter = chapterRepository.findById(chapterId);
+        List<Segment> segments = chapter.getSegments();
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(String.format("%s.%s.pdf", chapter.getFolder().getLabel(), chapter.getLabel())));
+        } catch(FileNotFoundException | DocumentException e){
+            e.printStackTrace();
+        }
+
+        Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+        document.open();
+
+        for(Segment segment : segments){
+
+                try {
+                    document.add(new Paragraph(segment.getText(), font));
+                    document.add(Chunk.NEWLINE);
+                } catch(DocumentException e){
+                    e.printStackTrace();
+                }
+        }
+        document.close();
     }
 
 }
