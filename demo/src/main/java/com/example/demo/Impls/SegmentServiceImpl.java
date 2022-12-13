@@ -134,6 +134,7 @@ public class SegmentServiceImpl implements SegmentService {
                 try {
                     document.add(new Paragraph(segment.getText(), font));
                     document.add(Chunk.NEWLINE);
+                    //image
                 } catch(DocumentException e){
                     e.printStackTrace();
                 }
