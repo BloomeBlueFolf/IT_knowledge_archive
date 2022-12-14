@@ -14,6 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -133,9 +138,15 @@ public class SegmentServiceImpl implements SegmentService {
 
                 try {
                     document.add(new Paragraph(segment.getText(), font));
+
+                    if(!segment.getFileType().equals("")) {
+                        Image image = Image.getInstance(ImageUtils.decompressImage(segment.getImage()));
+                        image.scalePercent(10f);
+                        document.add(image);
+                    }
                     document.add(Chunk.NEWLINE);
-                    //image
-                } catch(DocumentException e){
+
+                } catch(DocumentException | IOException e){
                     e.printStackTrace();
                 }
         }
