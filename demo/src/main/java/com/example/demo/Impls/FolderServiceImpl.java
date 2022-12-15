@@ -22,31 +22,37 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public Folder getFolder(long id) {
+
         return folderRepository.findById(id);
     }
 
     @Override
     public List<Folder> getAllFolders() {
+
         return folderRepository.findAllByOrderByLabelDesc();
     }
 
     @Override
     public void createFolder(String label) {
+
         folderRepository.save(new Folder(label));
     }
 
     @Override
     public void saveFolder(Folder folder) {
+
         folderRepository.save(folder);
     }
 
     @Override
     public void deleteFolder(Folder folder) {
+
         folderRepository.delete(folder);
     }
 
     @Override
     public void renameFolder(long id, Folder folder) {
+
         Folder renamedFolder = folderRepository.findById(id);
         renamedFolder.setLabel(folder.getLabel());
         saveFolder(renamedFolder);
@@ -54,6 +60,7 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public void assignChapterToFolder(Chapter chapter, Folder folder){
+
         folder.getChapters().add(chapter);
         chapter.setFolder(folder);
         folderRepository.save(folder);
