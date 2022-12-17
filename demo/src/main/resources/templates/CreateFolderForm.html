@@ -6,6 +6,8 @@
     <link href="/style/tablestyle.css" rel="stylesheet">
 </head>
 <body>
+    <div th:insert="fragments/navbar :: navbar"></div>
+    <br/>
     <div class="container w-50">
         <br/>
         <div class="col d-flex justify-content-center">
@@ -32,7 +34,7 @@
         </form>
         <br/>
         <hr>
-        <a href="/public/folders" class="btn btn-outline-primary me-1"><img src="/images/return.png" width="25px" height="25px" alt="return button"></a>
+        <a href="/user/folders" class="btn btn-outline-primary me-1"><img src="/images/return.png" width="25px" height="25px" alt="return button"></a>
     </div>
 </body>
 </html>

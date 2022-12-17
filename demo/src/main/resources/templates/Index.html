@@ -6,6 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <div th:insert="fragments/navbar :: navbar"></div>
+        <br/>
     <div class="container w-50">
         <br/>
         <div class="col d-flex justify-content-center">
@@ -22,7 +24,7 @@
         <br/>
         <br/>
         <div class="col">
-            <a href="/public/folders" class="btn btn-outline-primary btn-lg btn-block w-100">Categories</a>
+            <a href="/user/folders" class="btn btn-outline-primary btn-lg btn-block w-100">Categories</a>
         </div>
     </div>
 </body>

@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/**").permitAll()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")

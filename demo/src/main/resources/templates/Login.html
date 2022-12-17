@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<br/>
+<div class="container d-flex justify-content-center">
+  <h1>Login</h1>
+</div>
+<div class="container w-25">
+  <br/>
+  <div th:if = "${param.error}">
+    <div class="alert alert-danger">Invalid username or password!</div>
+  </div>
+  <div th:if = "${param.logout}">
+    <div class="alert alert-info">You are logged out.</div>
+  </div>
+</div>
+<br/>
+<div class="container w-25">
+  <form th:action = "@{/login}" method = "POST">
+      <div class="form-group">
+        <div class="col-sm">
+            <label for="username" class="col-form-label col-form-label-lg">Username</label>
+            <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Enter username">
+        </div>
+      </div>
+    <br/>
+      <div class="col-sm">
+        <label for="password" class="col-sm-2 col-form-label col-form-label-lg">Password</label>
+        <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Enter password">
+      </div>
+    <br/>
+    <hr class="ms-2">
+    <div class="form-check ms-5">
+      <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+      <h5><label class="form-check-label" for="remember-me">Remember me?</label></h5>
+    </div>
+    <div class="col-sm ms-5">
+      <br/>
+      <button type="submit" class="btn btn-outline-primary btn-lg m-2 p-2 align-text-top">Submit</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

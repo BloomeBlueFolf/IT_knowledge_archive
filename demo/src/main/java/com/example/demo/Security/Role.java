@@ -14,6 +14,10 @@ public class Role {
 
     private String role;
 
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<User> user;
+
     public Role() {
     }
 
@@ -36,8 +40,4 @@ public class Role {
     public void setUser(List<User> user) {
         this.user = user;
     }
-
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private List<User> user;
 }

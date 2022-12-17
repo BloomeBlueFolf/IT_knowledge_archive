@@ -21,7 +21,7 @@ public class FolderController {
     private FolderService folderService;
 
 
-    @GetMapping("/public/folders")
+    @GetMapping("/user/folders")
     public String showFolders(Model model){
 
         List<Folder> folderList = folderService.getAllFolders();
@@ -46,7 +46,7 @@ public class FolderController {
         }
 
         folderService.saveFolder(folder);
-        return "redirect:/public/folders?creationSuccess";
+        return "redirect:/user/folders?creationSuccess";
     }
 
     @GetMapping("/user/folder/delete/warning")
@@ -62,7 +62,7 @@ public class FolderController {
     public String deleteFolder(@RequestParam ("id") long id){
 
         folderService.deleteFolder(folderService.getFolder(id));
-        return "redirect:/public/folders?deletionSuccess";
+        return "redirect:/user/folders?deletionSuccess";
     }
 
     @GetMapping("/user/folder/rename")
@@ -89,7 +89,7 @@ public class FolderController {
         }
 
         folderService.renameFolder(id, folder);
-        return "redirect:/public/folders?renamingSuccess";
+        return "redirect:/user/folders?renamingSuccess";
     }
 
     @GetMapping("/user/folder/addChapter")
