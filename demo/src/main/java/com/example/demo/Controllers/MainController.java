@@ -4,6 +4,7 @@ import com.example.demo.Entities.UserDto;
 import com.example.demo.Repositories.RoleRepository;
 import com.example.demo.Repositories.UserRepository;
 import com.example.demo.Security.User;
+import com.example.demo.Services.UserService;
 import com.example.demo.UserMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class MainController {
 
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -58,7 +59,7 @@ public class MainController {
 
         User newUser = userMapper.toUser(userDto);
 
-        userRepository.save(newUser);
+        userService.saveUser(newUser);
         return "redirect:/user/folders";
     }
 }
