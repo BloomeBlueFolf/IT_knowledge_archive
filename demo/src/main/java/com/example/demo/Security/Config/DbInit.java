@@ -33,8 +33,9 @@ public class DbInit implements CommandLineRunner {
         if(!userRepository.existsByUsername("admin1")) {
 
             User admin1 = new User("default", "default", "admin1", passwordEncoder.encode("admin1"), List.of(adminRole, userRole));
+            User user1 = new User("default", "default", "user1", passwordEncoder.encode("user1"), List.of(userRole));
 
-            List<User> users = List.of(admin1);
+            List<User> users = List.of(admin1, user1);
 
             userRepository.saveAll(users);
         }

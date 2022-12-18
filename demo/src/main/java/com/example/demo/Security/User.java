@@ -1,7 +1,6 @@
 package com.example.demo.Security;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ public class User {
 
         @Id
         @Column(nullable = false)
-        @Size(min=5, max=30, message = "The username must have between 5 to 30 characters!")
         private String username;
 
         @Column(nullable = false)

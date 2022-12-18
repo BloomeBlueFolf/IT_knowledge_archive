@@ -18,17 +18,21 @@
                     <div sec:authorize="isAuthenticated()" class="nav-link m-2 ms-5"><a href="/user/profile" class="text-light">Profile</a></div>
                 </li>
                 <li class="nav-item">
-                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link m-2"><a href="/admin/registration" class="text-light">Create new account</a></div>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link m-2"><a href="/admin/addAccount" class="text-light">Create new account</a></div>
                 </li>
                 <li class="nav-item">
                     <div sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link m-2 me-5"><a href="/admin/accounts/show" class="text-light">Show accounts</a></div>
                 </li>
                 <li class="nav-item">
-                    <div class="nav-link m-2 me-5"><a href="/credits" class="text-light">Credits</a></div>
+                    <div class="nav-link m-2 me-5 ms-5 d-flex"><a href="/credits" class="text-light">Credits</a></div>
                 </li>
             </ul>
+            <img src="/images/user.png" width="32px" height="32px" alt="user profile" class="me-2"/>
+            <div sec:authorize="isAuthenticated()">
+                <span class="text-light h4" sec:authentication="principal.username"></span>
+            </div>
             <form class = "form-inline my-2 my-lg-0" th:action = "@{/logout}" method = "POST">
-                <button sec:authorize="isAuthenticated()" type="submit" class="btn btn-warning p-2 m-3 ms-5 text-dark rounded-0">Logout<img src="/images/logout.png" width="20px" height="20px" alt="logout button" class="ms-2"></button>
+                <button sec:authorize="isAuthenticated()" type="submit" class="btn btn-warning p-2 m-3 ms-5 text-dark rounded-0">Logout<img sec:authorize="isAuthenticated()" src="/images/logout.png" width="20px" height="20px" alt="logout button" class="ms-2"></button>
             </form>
         </div>
     </nav>
