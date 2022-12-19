@@ -2,7 +2,6 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Entities.UserDto;
 import com.example.demo.Repositories.RoleRepository;
-import com.example.demo.Repositories.UserRepository;
 import com.example.demo.Security.User;
 import com.example.demo.Services.UserService;
 import com.example.demo.UserMapper;
@@ -16,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
@@ -73,5 +71,11 @@ public class MainController {
 
         model.addAttribute(("user"), userService.findUser(auth.getName()));
         return "userprofile";
+    }
+
+    @GetMapping("/showCredits")
+    public String showCredits(){
+
+        return "credits";
     }
 }
