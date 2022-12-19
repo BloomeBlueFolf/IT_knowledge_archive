@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class MainController {
 
@@ -78,4 +81,12 @@ public class MainController {
 
         return "credits";
     }
+
+    @GetMapping("/admin/showAccounts")
+    public String showAccounts(Model model){
+
+        model.addAttribute(("accounts"), userService.showAllUsers());
+        return "accounts";
+    }
+
 }

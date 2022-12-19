@@ -40,4 +40,9 @@ public class Role {
     public void setUser(List<User> user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return role;
+    }
 }

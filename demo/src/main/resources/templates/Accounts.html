@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Accounts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/style/tablestyle.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}"></div>
+<div class="container">
+    <br/>
+    <div th:if = "${param.success}">
+        <div class="alert alert-info w-25">Account succesfully deleted!</div>
+    </div>
+    <br/>
+    <h2><span class="d-flex justify-content-center">Accounts</span></h2>
+    <br/>
+    <br/>
+    <div th:each="account : ${accounts}">
+        <div class="form-group row w-100">
+            <div class="col">
+                <h5><strong>First Name:</strong></h5>
+            </div>
+            <div class="col text-primary">
+                <h5 th:text="${account.firstName}"></h5>
+            </div>
+            <div class="col">
+                <h5><strong>Last Name:</strong></h5>
+            </div>
+            <div class="col text-primary">
+                <h5 th:text="${account.lastName}"></h5>
+            </div>
+            <div class="col">
+                <h5><strong>Username:</strong></h5>
+            </div>
+            <div class="col text-primary">
+                <h5 th:text="${account.username}"></h5>
+            </div>
+            <div class="col">
+                <h5><strong>Roles:</strong></h5>
+            </div>
+            <div class="col text-primary">
+                <h5 th:text="${account.roles}"></h5>
+            </div>
+            <div class="col text-primary">
+                <div th:unless="${account.username == 'admin1'}">
+                    <a th:href="@{/admin/account/delete(username=${account.username})}" class="btn btn-danger ms-2">Delete</a>
+                </div>
+            </div>
+        </div>
+        <hr class="w-100">
+    </div>
+    <br/>
+    <hr>
+    <a href="/user/folders" class="btn btn-outline-primary me-1"><img src="/images/return.png" width="25px" height="25px" alt="return button"></a>
+    <br/>
+    <br/>
+</div>
+</body>
+</html>

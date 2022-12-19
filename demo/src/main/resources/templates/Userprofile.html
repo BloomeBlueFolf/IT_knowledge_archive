@@ -8,12 +8,12 @@
 </head>
 <body>
 <div th:insert="~{fragments/navbar :: navbar}"></div>
-<div class="container">
+<div class="container w-50">
     <br/>
     <h3><span class="d-flex justify-content-center">Profile</span></h3>
     <br/>
     <br/>
-    <div class="row d-flex justify-content-center">
+    <div class="row">
         <div class="d-flex justify-content-center col-sm m-3">
             <h5><strong class="me-3">First Name:</strong></h5>
             <h5 th:text="${user.firstName}"></h5>
@@ -32,7 +32,7 @@
         <div class="d-flex justify-content-center col-sm m-3">
             <h5><strong class="me-3">Roles:</strong></h5>
             <div th:each="role : ${user.roles}" class="row">
-                <div class="col-sm"><h5 th:text="${role.getRole()}"></h5></div>
+                <div class="col-sm"><h5 th:text="${role}"></h5></div>
                 <div class="w-100"></div>
             </div>
         </div>
