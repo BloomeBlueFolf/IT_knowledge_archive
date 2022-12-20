@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,9 @@ public class MainController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
 
     @GetMapping("/")
@@ -95,4 +99,32 @@ public class MainController {
         return "redirect:/admin/showAccounts";
     }
 
+    @GetMapping("/user/editAccount")
+    public String editAccount(@RequestParam ("username") String username,
+                              Model model){
+
+        model.addAttribute(("user"), userService.findUser(username));
+        return "editAccountForm";
+    }
+
+    @PostMapping("/user/editAccount")
+    public String editAccount(@Valid @ModelAttribute ("user") User user,
+                              BindingResult result,
+                              Model model){
+
+        if(result.hasErrors()){
+
+            model.addAttribute(("user"), user);
+            return "editAccountForm";
+        }
+
+        User editedUser = userService.findUser(user.getUsername());
+
+        editedUser.setFirstName(user.getFirstName());
+        editedUser.setLastName(user.getLastName());
+        editedUser.setPassword(encoder.encode(user.getPassword()));
+
+        userService.saveUser(editedUser);
+        return "redirect:/user/showProfile";
+    }
 }
