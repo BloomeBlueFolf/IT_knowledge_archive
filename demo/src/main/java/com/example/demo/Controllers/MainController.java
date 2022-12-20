@@ -15,9 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class MainController {
@@ -87,6 +86,13 @@ public class MainController {
 
         model.addAttribute(("accounts"), userService.showAllUsers());
         return "accounts";
+    }
+
+    @GetMapping("/admin/deleteAccount")
+    public String deleteAccount(@RequestParam ("username") String username){
+
+        userService.deleteUser(userService.findUser(username));
+        return "redirect:/admin/showAccounts";
     }
 
 }
