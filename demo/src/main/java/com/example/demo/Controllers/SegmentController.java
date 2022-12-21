@@ -92,6 +92,7 @@ public class SegmentController {
                               @RequestParam ("id") long id){
 
         Segment editedSegment = segmentService.getSegment(id);
+        model.addAttribute(("id"), id);
         model.addAttribute(("segment"), editedSegment);
         return "EditSegmentForm";
     }
@@ -104,8 +105,9 @@ public class SegmentController {
                               Model model){
 
         if(result.hasErrors()){
-            Segment editedSegment = segmentService.getSegment(id);
-            model.addAttribute(("segment"), editedSegment);
+
+            model.addAttribute(("id"), id);
+            model.addAttribute(("segment"), segment);
             return "EditSegmentForm";
         }
 

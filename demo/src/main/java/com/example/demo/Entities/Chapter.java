@@ -14,7 +14,7 @@ public class Chapter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Size(min=1, max=25)
+    @Size(min=1, max=30)
     private String label;
 
     @JsonIgnore

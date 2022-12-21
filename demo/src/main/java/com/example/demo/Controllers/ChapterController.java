@@ -58,6 +58,7 @@ public class ChapterController {
                                 @RequestParam ("id") long id){
 
         Chapter chapter = chapterService.getChapter(id);
+        model.addAttribute(("id"), id);
         model.addAttribute(("chapter"), chapter);
         return "renameChapterForm";
     }
@@ -70,8 +71,10 @@ public class ChapterController {
                                 Model model){
 
         if(result.hasErrors()){
-            Chapter chapters = chapterService.getChapter(id);
-            model.addAttribute(("chapter"), chapters);
+
+            //Chapter chapters = chapterService.getChapter(id);
+            model.addAttribute(("chapter"), chapter);
+            model.addAttribute(("id"), id);
             return "renameChapterForm";
         }
 

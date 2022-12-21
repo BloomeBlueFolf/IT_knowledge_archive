@@ -82,9 +82,9 @@ public class FolderController {
                                Model model){
 
         if(result.hasErrors()){
-            Folder renamedFolder = folderService.getFolder(id);
+
             model.addAttribute(("id"), id);
-            model.addAttribute("folder", renamedFolder);
+            model.addAttribute("folder", folder);
             return "renameFolderForm";
         }
 

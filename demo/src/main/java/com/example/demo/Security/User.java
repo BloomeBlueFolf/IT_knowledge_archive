@@ -1,7 +1,6 @@
 package com.example.demo.Security;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class User {
                 joinColumns = @JoinColumn(name = "username"),
                 inverseJoinColumns = @JoinColumn(name = "role_id")
         )
+
         private List<Role> roles;
 
         public User(String firstName, String lastName, String username, String password, List<Role> roles) {
