@@ -103,26 +103,26 @@ public class MainController {
     public String editAccount(@RequestParam ("username") String username,
                               Model model){
 
-        model.addAttribute(("user"), userService.findUser(username));
+        model.addAttribute(("userDto"), userMapper.toDto(userService.findUser(username)));
         return "editAccountForm";
     }
 
     @PostMapping("/user/editAccount")
-    public String editAccount(@Valid @ModelAttribute ("user") User user,
+    public String editAccount(@Valid @ModelAttribute ("userDto") UserDto userDto,
                               BindingResult result,
                               Model model){
 
         if(result.hasErrors()){
 
-            model.addAttribute(("user"), user);
+            model.addAttribute(("userDto"), userDto);
             return "editAccountForm";
         }
 
-        User editedUser = userService.findUser(user.getUsername());
+        User editedUser = userService.findUser(userDto.getUsername());
 
-        editedUser.setFirstName(user.getFirstName());
-        editedUser.setLastName(user.getLastName());
-        editedUser.setPassword(encoder.encode(user.getPassword()));
+        editedUser.setFirstName(userDto.getFirstName());
+        editedUser.setLastName(userDto.getLastName());
+        editedUser.setPassword(encoder.encode(userDto.getPassword()));
 
         userService.saveUser(editedUser);
         return "redirect:/user/showProfile";
