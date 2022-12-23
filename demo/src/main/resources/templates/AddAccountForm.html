@@ -37,6 +37,9 @@
                 <input type="text" class="form-control form-control-lg" id="username" th:field = "*{username}" placeholder="Enter username">
                 <p  th:if="${#fields.hasErrors('username')}" th:class="error">
                     Username must have between 3 to 30 characters.</p>
+                <div th:if = "${param.usernameExists}" class="d-flex justify-content-center">
+                    <div class="alert alert-danger d-flex justify-content-center">Username already exists!</div>
+                </div>
                 <br/>
                 <label for="password" class="col-form-label col-form-label-lg">Password</label>
                 <input type="password" id="password" class="form-control form-control-lg" th:field = "*{password}" placeholder="Enter password">

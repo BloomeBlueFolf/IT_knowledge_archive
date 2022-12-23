@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Accounts</title>
@@ -46,6 +47,11 @@
             <div class="col text-primary">
                 <div th:unless="${account.username == 'admin1'}">
                     <a th:href="@{/admin/deleteAccount(username=${account.username})}"><img src="/images/bin.png" width="40px" height="40px" alt="delete button"></a>
+                </div>
+            </div>
+            <div class="col text-primary">
+                <div th:unless="${account.username == auth}">
+                    <a th:href="@{/admin/editAccount(username=${account.username})}"><img src="/images/edit.png" width="40px" height="40px" alt="delete button"></a>
                 </div>
             </div>
         </div>

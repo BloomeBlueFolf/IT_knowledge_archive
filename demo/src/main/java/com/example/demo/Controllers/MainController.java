@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 
 @Controller
 public class MainController {
@@ -64,6 +66,13 @@ public class MainController {
             return "addAccountForm";
         }
 
+        List<User> userList = userService.showAllUsers();
+        for(User user : userList){
+            if(user.getUsername().equals(userDto.getUsername())){
+                return "redirect:/admin/addAccount?usernameExists";
+            }
+        }
+
         User newUser = userMapper.toUser(userDto);
 
         userService.saveUser(newUser);
@@ -88,6 +97,7 @@ public class MainController {
     @GetMapping("/admin/showAccounts")
     public String showAccounts(Model model){
 
+        model.addAttribute(("auth"), SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute(("accounts"), userService.showAllUsers());
         return "accounts";
     }
@@ -126,5 +136,36 @@ public class MainController {
 
         userService.saveUser(editedUser);
         return "redirect:/user/showProfile";
+    }
+
+    @GetMapping("/admin/editAccount")
+    public String editAccountAdmin(@RequestParam ("username") String username,
+                              Model model){
+
+        model.addAttribute(("userDto"), userMapper.toDto(userService.findUser(username)));
+        model.addAttribute(("username"), username);
+        return "editAccountFormAdmin";
+    }
+
+    @PostMapping("/admin/editAccount")
+    public String editAccountAdmin(@Valid @ModelAttribute ("userDto") UserDto userDto,
+                              BindingResult result,
+                              Model model,
+                              @RequestParam ("username") String username){
+
+        if(result.hasErrors()){
+
+            model.addAttribute(("userDto"), userDto);
+            return "editAccountFormAdmin";
+        }
+
+        User editedUser = userService.findUser(userDto.getUsername());
+
+        editedUser.setFirstName(userDto.getFirstName());
+        editedUser.setLastName(userDto.getLastName());
+        editedUser.setPassword(encoder.encode(userDto.getPassword()));
+
+        userService.saveUser(editedUser);
+        return "redirect:/admin/showAccounts";
     }
 }
