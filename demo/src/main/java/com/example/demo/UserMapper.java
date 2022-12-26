@@ -37,6 +37,6 @@ public class UserMapper {
         List<Role> roleList = new LinkedList<>();
         roleList.add(role);
         roleRepository.save(role);
-        return new User(userDto.getFirstName(), userDto.getLastName(), userDto.getUsername(), encoder.encode(userDto.getPassword()), roleList);
+        return new User(userDto.getFirstName(), userDto.getLastName(), userDto.getUsername(), encoder.encode(userDto.getPassword()), roleList, null);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.demo.Entities;
 
+import com.example.demo.Security.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -20,6 +22,11 @@ public class Folder {
 
     @OneToMany(mappedBy = "folder", orphanRemoval = true)
     private List<Chapter> chapters = new LinkedList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "username")
+    private User user;
 
     public Folder(){};
 
@@ -47,12 +54,21 @@ public class Folder {
         this.chapters = chapters;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Folder{" +
                 "id=" + id +
                 ", label='" + label + '\'' +
                 ", chapters=" + chapters +
+                ", user=" + user +
                 '}';
     }
 

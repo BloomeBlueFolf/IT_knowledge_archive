@@ -2,9 +2,11 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Entities.Chapter;
 import com.example.demo.Entities.Folder;
+import com.example.demo.Impls.UserServiceImpl;
 import com.example.demo.Services.FolderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,12 +22,22 @@ public class FolderController {
     @Autowired
     private FolderService folderService;
 
+    @Autowired
+    private UserServiceImpl userService;
+
 
     @GetMapping("/user/folders")
     public String showFolders(Model model){
 
-        List<Folder> folderList = folderService.getAllFolders();
+        List<Folder> folderList = folderService.getAllFolders(userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+
+        String labelLastElement = "";
+        if(!folderList.isEmpty()) {
+            labelLastElement = folderList.get(folderList.size() - 1).getLabel();
+        }
+
         model.addAttribute(("folders"), folderList);
+        model.addAttribute(("lastElement"), labelLastElement);
         return "folders";
     }
 
@@ -45,6 +57,7 @@ public class FolderController {
             return "createFolderForm";
         }
 
+        folder.setUser(userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         folderService.saveFolder(folder);
         return "redirect:/user/folders?creationSuccess";
     }

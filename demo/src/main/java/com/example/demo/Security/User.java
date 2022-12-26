@@ -1,5 +1,6 @@
 package com.example.demo.Security;
 
+import com.example.demo.Entities.Folder;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -8,75 +9,87 @@ import java.util.List;
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class User {
 
-        @Column(name = "first_name", nullable = false)
-        private String firstName;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-        @Column(name = "last_name", nullable = false)
-        private String lastName;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
-        @Id
-        @Column(nullable = false)
-        private String username;
+    @Id
+    @Column(nullable = false)
+    private String username;
 
-        @Column(nullable = false)
-        private String password;
+    @Column(nullable = false)
+    private String password;
 
-        @ManyToMany(fetch = FetchType.EAGER)
-        @JoinTable(name = "user_role",
-                joinColumns = @JoinColumn(name = "username"),
-                inverseJoinColumns = @JoinColumn(name = "role_id")
-        )
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "username"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
 
-        private List<Role> roles;
+    private List<Role> roles;
 
-        public User(String firstName, String lastName, String username, String password, List<Role> roles) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.username = username;
-            this.password = password;
-            this.roles = roles;
-        }
+    public User(String firstName, String lastName, String username, String password, List<Role> roles, List<Folder> folders) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+        this.folders = folders;
+    }
 
-        public User(){};
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<Folder> folders;
 
-        public String getFirstName() {
-            return firstName;
-        }
+    public User(){};
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
+    public String getFirstName() {
+        return firstName;
+    }
 
-        public String getLastName() {
-            return lastName;
-        }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
+    public String getLastName() {
+        return lastName;
+    }
 
-        public String getUsername() {
-            return username;
-        }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-        public void setUsername(String username) {
-            this.username = username;
-        }
+    public String getUsername() {
+        return username;
+    }
 
-        public String getPassword() {
-            return password;
-        }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-        public void setPassword(String password) {
-            this.password = password;
-        }
+    public String getPassword() {
+        return password;
+    }
 
-        public List<Role> getRoles() {
-            return roles;
-        }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-        public void setRoles(List<Role> roles) {
-            this.roles = roles;
-        }
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Folder> getFolders() {
+        return folders;
+    }
+
+    public void setFolders(List<Folder> folders) {
+        this.folders = folders;
+    }
 }
 

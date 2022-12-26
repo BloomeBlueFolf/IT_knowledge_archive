@@ -4,6 +4,7 @@ import com.example.demo.Entities.Chapter;
 import com.example.demo.Entities.Folder;
 import com.example.demo.Repositories.ChapterRepository;
 import com.example.demo.Repositories.FolderRepository;
+import com.example.demo.Security.User;
 import com.example.demo.Services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,15 +28,9 @@ public class FolderServiceImpl implements FolderService {
     }
 
     @Override
-    public List<Folder> getAllFolders() {
+    public List<Folder> getAllFolders(User user) {
 
-        return folderRepository.findAllByOrderByLabelDesc();
-    }
-
-    @Override
-    public void createFolder(String label) {
-
-        folderRepository.save(new Folder(label));
+        return folderRepository.findAllByUserOrderByLabelDesc(user);
     }
 
     @Override

@@ -66,5 +66,13 @@
             <a href="/user/folder/create" class="btn btn-outline-primary"><img src="/images/plus.png" width="20px" height="20px" alt="add button"><span class="ms-2">Add folder</span></a>
         </div>
     </div>
+    <div class="container">
+        <div th:each = "folder : ${folders}">
+            <div  class="col-sm col-sm d-flex justify-content-center h3 align-items-center"><a th:href="@{/user/chapters(id=${folder.id})}"><span th:text = "${folder.label}" class="text-primary"></span></a></div>
+            <div th:unless="${folder.getLabel() == lastElement}">
+                <div  class="col-sm d-flex justify-content-center"><img src="/images/path1.png" width="4px" height="40px" alt="path"></div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
