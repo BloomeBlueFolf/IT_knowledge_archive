@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class ChapterController {
 
@@ -28,7 +30,15 @@ public class ChapterController {
     public String showChapters(Model model,
                                @RequestParam ("id") long id){
 
+        List<Chapter> chapterList = folderService.getFolder(id).getChapters();
+
+        String labelLastElement = "";
+        if(!chapterList.isEmpty()) {
+            labelLastElement = chapterList.get(chapterList.size() - 1).getLabel();
+        }
+
         model.addAttribute(("folder"), folderService.getFolder(id));
+        model.addAttribute(("lastElement"), labelLastElement);
         return "chapters";
     }
 
