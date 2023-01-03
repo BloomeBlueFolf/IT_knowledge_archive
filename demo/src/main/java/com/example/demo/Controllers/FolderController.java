@@ -38,6 +38,7 @@ public class FolderController {
 
         model.addAttribute(("folders"), folderList);
         model.addAttribute(("lastElement"), labelLastElement);
+        model.addAttribute(("username"), SecurityContextHolder.getContext().getAuthentication().getName()); //XXX
         return "folders";
     }
 

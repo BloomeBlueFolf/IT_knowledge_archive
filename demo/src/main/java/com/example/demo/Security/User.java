@@ -27,8 +27,16 @@ public class User {
             joinColumns = @JoinColumn(name = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<Folder> folders;
+
+
+    private String secret;
+
+    private Boolean useMFA = false;
+
 
     public User(String firstName, String lastName, String username, String password, List<Role> roles, List<Folder> folders) {
         this.firstName = firstName;
@@ -39,10 +47,24 @@ public class User {
         this.folders = folders;
     }
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<Folder> folders;
+    public User(){
+    };
 
-    public User(){};
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public Boolean getUseMFA() {
+        return useMFA;
+    }
+
+    public void setUseMFA(Boolean useMFA) {
+        this.useMFA = useMFA;
+    }
 
     public String getFirstName() {
         return firstName;

@@ -84,6 +84,7 @@ public class MainController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+
         model.addAttribute(("user"), userService.findUser(auth.getName()));
         return "userprofile";
     }
