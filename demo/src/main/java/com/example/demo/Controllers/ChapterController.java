@@ -82,7 +82,6 @@ public class ChapterController {
 
         if(result.hasErrors()){
 
-            //Chapter chapters = chapterService.getChapter(id);
             model.addAttribute(("chapter"), chapter);
             model.addAttribute(("id"), id);
             return "renameChapterForm";

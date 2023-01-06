@@ -1,7 +1,10 @@
-package com.example.demo.Security.Auth2FA;
+package com.example.demo.Security.Auth2FA.Try;
+
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class UserTOTP {
 
     private String username;

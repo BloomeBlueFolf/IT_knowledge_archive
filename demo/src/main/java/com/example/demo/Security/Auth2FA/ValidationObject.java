@@ -2,24 +2,24 @@ package com.example.demo.Security.Auth2FA;
 
 public class ValidationObject {
 
-    private String password;
+    private String code;
 
     private String username;
 
     public ValidationObject() {
     }
 
-    public ValidationObject(String password, String username) {
-        this.password = password;
+    public ValidationObject(String code, String username) {
+        this.code = code;
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getCode() {
+        return code;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getUsername() {

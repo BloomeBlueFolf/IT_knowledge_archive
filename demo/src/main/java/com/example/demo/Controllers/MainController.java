@@ -136,6 +136,7 @@ public class MainController {
         editedUser.setPassword(encoder.encode(userDto.getPassword()));
 
         userService.saveUser(editedUser);
+
         return "redirect:/user/showProfile";
     }
 

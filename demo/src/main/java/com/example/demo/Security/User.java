@@ -35,7 +35,11 @@ public class User {
 
     private String secret;
 
+    @Column(name = "use_mfa")
     private Boolean useMFA = false;
+
+    //@Transient () // ignored by jpa and not saved to DB
+    private Boolean Google2FaRequired = true;
 
 
     public User(String firstName, String lastName, String username, String password, List<Role> roles, List<Folder> folders) {
@@ -64,6 +68,14 @@ public class User {
 
     public void setUseMFA(Boolean useMFA) {
         this.useMFA = useMFA;
+    }
+
+    public Boolean getGoogle2FaRequired() {
+        return Google2FaRequired;
+    }
+
+    public void setGoogle2FaRequired(Boolean google2FaRequired) {
+        Google2FaRequired = google2FaRequired;
     }
 
     public String getFirstName() {
