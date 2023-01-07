@@ -2,6 +2,7 @@ package com.example.demo.Security.Config;
 
 
 import com.example.demo.Security.Auth2FA.Google2faFilter;
+import com.example.demo.Security.Auth2FA.Try.CustomLogoutSuccessHandler;
 import com.example.demo.Security.UserPrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,9 @@ public class SecurityConfiguration {
     @Autowired
     private Google2faFilter google2faFilter;
 
+    @Autowired
+    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -47,6 +51,7 @@ public class SecurityConfiguration {
                 .logout((logout) -> logout
                     .clearAuthentication(true)
                     .deleteCookies("JSESSIONID", "remember-me")
+                    .logoutSuccessHandler(customLogoutSuccessHandler)
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
                 )
                 .rememberMe().userDetailsService(userPrincipalDetailsService)

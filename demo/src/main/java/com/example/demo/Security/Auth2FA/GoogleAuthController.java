@@ -93,7 +93,6 @@ public class GoogleAuthController {
     @PostMapping("/user/validateCode")
     public String validateCode(@RequestParam("verifyCode") Integer verifyCode) {
 
-        //GoogleAuthenticator gAuth = new GoogleAuthenticator();
         User loggedUser = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
         if (gAuth.authorize(loggedUser.getSecret(), verifyCode)) {
             loggedUser.setUseMFA(true);
@@ -107,16 +106,17 @@ public class GoogleAuthController {
 
     @GetMapping("/user/verify2FA")
     public String verify(){
-        return "Hellow";
+        return "verify2FA";
     }
 
     @PostMapping("/user/verify2FA") //verification of google code
     public String verify2FA(@RequestParam ("verifyCode") Integer verifyCode){
 
-        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        if(gAuth.authorizeUser(userPrincipal.getUsername(), verifyCode)){ // evtl only authorize + secret + code
-            ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).setGoogle2FaRequired(false);
+        if(gAuth.authorize(user.getSecret(), verifyCode)){ // evtl only authorize + secret + code
+           user.setGoogle2FaRequired(false);
+           userService.saveUser(user);
 
             return "redirect:/user/folders";
         } else {
