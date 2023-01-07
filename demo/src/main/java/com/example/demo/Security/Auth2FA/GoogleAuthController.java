@@ -1,7 +1,6 @@
 package com.example.demo.Security.Auth2FA;
 
 import com.example.demo.Security.User;
-import com.example.demo.Security.UserPrincipal;
 import com.example.demo.Services.UserService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -11,13 +10,16 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,9 +43,6 @@ public class GoogleAuthController {
          return "redirect:/user/showProfile";
      }
 
-//    loggedUser.setUseMFA(false);
-//    loggedUser.setGoogle2FaRequired(true);
-    //userService.saveUser(loggedUser);
     return "redirect:/user/getQRCode";
     }
 
@@ -57,7 +56,6 @@ public class GoogleAuthController {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User loggedUser = userService.findUser(username);
-        String secret = loggedUser.getSecret();
 
 
         if (loggedUser.getSecret() == null) {
@@ -83,8 +81,6 @@ public class GoogleAuthController {
         byte[] pngData = outputStream.toByteArray();
         outputStream.close();
 
-        ValidationObject validationObject = new ValidationObject();
-
         model.addAttribute(("image"), Base64.getEncoder().encodeToString(pngData));
 
         return "qrCodeConfirm";
@@ -98,10 +94,10 @@ public class GoogleAuthController {
             loggedUser.setUseMFA(true);
             loggedUser.setGoogle2FaRequired(false);
             userService.saveUser(loggedUser);
-            return "redirect:/user/showProfile";
+            return "redirect:/user/showProfile?MFAEnabled";
         }
 
-        return "redirect:/user/getQrCode";
+        return "redirect:/user/getQRCode?wrongCode";
     }
 
     @GetMapping("/user/verify2FA")
@@ -109,19 +105,38 @@ public class GoogleAuthController {
         return "verify2FA";
     }
 
-    @PostMapping("/user/verify2FA") //verification of google code
+    @PostMapping("/user/verify2FA")
     public String verify2FA(@RequestParam ("verifyCode") Integer verifyCode){
 
         User user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        if(gAuth.authorize(user.getSecret(), verifyCode)){ // evtl only authorize + secret + code
+        if(gAuth.authorize(user.getSecret(), verifyCode)){
            user.setGoogle2FaRequired(false);
            userService.saveUser(user);
 
             return "redirect:/user/folders";
         } else {
 
-            return "redirect:/user/verify2FA";
+            return "redirect:/user/verify2FA?wrongCode";
         }
+    }
+
+    @GetMapping("/user/disable2FA")
+    public String disable2FA(){
+
+        User loggedUser = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        loggedUser.setGoogle2FaRequired(true);
+        loggedUser.setUseMFA(false);
+        userService.saveUser(loggedUser);
+
+        return "redirect:/user/showProfile?MFADisabled";
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String handleTypeMismatchWrongCodeInputType(MethodArgumentTypeMismatchException ex,
+                                                       HttpServletRequest httpServletRequest) {
+        String referer = httpServletRequest.getHeader("referer");
+
+        return "redirect:" + referer + "?onlyNumbers";
     }
 }

@@ -2,7 +2,7 @@ package com.example.demo.Security.Config;
 
 
 import com.example.demo.Security.Auth2FA.Google2faFilter;
-import com.example.demo.Security.Auth2FA.Try.CustomLogoutSuccessHandler;
+import com.example.demo.Security.Auth2FA.CustomLogoutSuccessHandler;
 import com.example.demo.Security.UserPrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration

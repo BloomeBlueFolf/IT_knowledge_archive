@@ -1,7 +1,6 @@
 package com.example.demo.Security.Auth2FA;
 
 import com.example.demo.Impls.UserServiceImpl;
-import com.example.demo.Security.Auth2FA.Try.Google2faFailureHandler;
 import com.example.demo.Security.User;
 import com.example.demo.Security.UserPrincipal;
 import jakarta.servlet.FilterChain;
@@ -45,10 +44,9 @@ public class Google2faFilter extends GenericFilterBean {
 
         StaticResourceRequest.StaticResourceRequestMatcher staticResourceRequestMatcher = PathRequest.toStaticResources().atCommonLocations();
 
-        // if requested url matches those url snippets
         if(urlIs2fa.matches(request) || urlResource.matches(request) || staticResourceRequestMatcher.matcher(request).isMatch()){
             filterChain.doFilter(request, response);
-            return; // filter skipped
+            return;
         }
 
 
@@ -67,11 +65,11 @@ public class Google2faFilter extends GenericFilterBean {
                 if(user.getUseMFA() && user.getGoogle2FaRequired()){
 
                     google2faFailureHandler.onAuthenticationFailure(request, response, null);
-                    return; // that code doesn't proceed
+                    return;
                 }
             }
         }
 
-        filterChain.doFilter(request, response); //calls the next filter on chain or when it's last filter then executes the resource
+        filterChain.doFilter(request, response);
     }
 }

@@ -32,13 +32,11 @@ public class User {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Folder> folders;
 
-
     private String secret;
 
     @Column(name = "use_mfa")
     private Boolean useMFA = false;
 
-    //@Transient () // ignored by jpa and not saved to DB
     private Boolean Google2FaRequired = true;
 
 

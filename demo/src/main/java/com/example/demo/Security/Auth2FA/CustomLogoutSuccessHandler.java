@@ -1,4 +1,4 @@
-package com.example.demo.Security.Auth2FA.Try;
+package com.example.demo.Security.Auth2FA;
 
 import com.example.demo.Repositories.UserRepository;
 import com.example.demo.Security.User;
