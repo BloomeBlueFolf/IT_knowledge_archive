@@ -23,7 +23,7 @@
             <div class="form-group">
                 <div class="col-sm">
                     <label for="labelChapter" class="col-sm-2 col-form-label col-form-label-lg">Label</label>
-                    <input type="text" class="form-control form-control-lg" id="labelChapter" th:field = "*{label}" placeholder="Enter label">
+                    <input type="text" class="form-control form-control-lg" id="labelChapter" th:field = "*{label}" placeholder="Enter label" autofocus>
                     <p  th:if="${#fields.hasErrors('label')}" th:class="error">
                         Label must have 1 to 25 characters.</p>
                 </div>

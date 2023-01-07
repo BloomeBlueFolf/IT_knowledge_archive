@@ -23,7 +23,7 @@
       <div class="form-group">
         <div class="col-sm">
           <label for="contentSegment" class="col-sm-2 col-form-label col-form-label-lg">Content</label>
-          <textarea rows="6" cols="60" id="contentSegment" th:field = "*{text}" placeholder="Enter text"></textarea>
+          <textarea rows="6" cols="60" id="contentSegment" th:field = "*{text}" placeholder="Enter text" autofocus></textarea>
           <p  th:if="${#fields.hasErrors('text')}" th:class="error">
            Text may content 2000 characters at most.</p>
         </div>

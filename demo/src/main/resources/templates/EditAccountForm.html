@@ -18,7 +18,7 @@
     <form th:action = "@{/user/editAccount}" th:object="${userDto}" method = "POST" class="d-flex justify-content-center">
         <div class="form-group">
             <label for="firstName" class="col-form-label col-form-label-lg">First name</label>
-            <input type="text" class="form-control form-control-lg" id="firstName" th:field = "*{firstName}" placeholder="Enter new first name">
+            <input type="text" class="form-control form-control-lg" id="firstName" th:field = "*{firstName}" placeholder="Enter new first name" autofocus>
             <p  th:if="${#fields.hasErrors('firstName')}" th:class="error">
                 First name must have between 1 to 30 characters.</p>
             <br/>
