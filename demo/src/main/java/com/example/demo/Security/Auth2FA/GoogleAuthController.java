@@ -37,12 +37,6 @@ public class GoogleAuthController {
     @GetMapping("/user/enable2FA")
     public String enable2fa(){
 
-     User loggedUser = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
-
-     if(loggedUser.getUseMFA()){
-         return "redirect:/user/showProfile";
-     }
-
     return "redirect:/user/getQRCode";
     }
 
@@ -127,9 +121,22 @@ public class GoogleAuthController {
         User loggedUser = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
         loggedUser.setGoogle2FaRequired(true);
         loggedUser.setUseMFA(false);
+        loggedUser.setSecret(null);
         userService.saveUser(loggedUser);
 
         return "redirect:/user/showProfile?MFADisabled";
+    }
+
+    @GetMapping("/admin/disable2faUser")
+    public String disable2faUser(@RequestParam ("username") String username){
+
+        User user = userService.findUser(username);
+        user.setGoogle2FaRequired(true);
+        user.setUseMFA(false);
+        user.setSecret(null);
+        userService.saveUser(user);
+
+        return "redirect:/admin/showAccounts";
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

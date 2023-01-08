@@ -12,7 +12,8 @@ public class Google2faFailureHandler implements AuthenticationFailureHandler {
 
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                        AuthenticationException exception) throws IOException, ServletException {
 
         request.getRequestDispatcher("/user/verify2FA").forward(request, response);
     }

@@ -37,14 +37,17 @@ public class Google2faFilter extends GenericFilterBean {
 
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        StaticResourceRequest.StaticResourceRequestMatcher staticResourceRequestMatcher = PathRequest.toStaticResources().atCommonLocations();
+        StaticResourceRequest.StaticResourceRequestMatcher staticResourceRequestMatcher =
+                PathRequest.toStaticResources().atCommonLocations();
 
-        if(urlIs2fa.matches(request) || urlResource.matches(request) || staticResourceRequestMatcher.matcher(request).isMatch()){
+        if(urlIs2fa.matches(request) || urlResource.matches(request) ||
+                staticResourceRequestMatcher.matcher(request).isMatch()){
             filterChain.doFilter(request, response);
             return;
         }

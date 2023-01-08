@@ -26,6 +26,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
         User user = userRepository.findByUsername(authentication.getName());
         user.setGoogle2FaRequired(true);
         userRepository.save(user);
-        response.sendRedirect("/login");
+        response.sendRedirect("/login?logout");
     }
 }
